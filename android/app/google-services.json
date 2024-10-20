@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "15606020851",
+    "project_id": "responsible-map-388106",
+    "storage_bucket": "responsible-map-388106.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15606020851:android:52ea9e4b7ddeaf67d65586",
+        "android_client_info": {
+          "package_name": "com.example.souvenir_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANKqNDv6MgUQEmXE-j2WZmmbkntWddrAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
