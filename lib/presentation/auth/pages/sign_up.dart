@@ -93,9 +93,9 @@ class _SignUpPageState extends State<SignUpPage> {
               userCreationReq: UserCreationReq(
                   _nameController.text,
                   _emailController.text,
-                  _emailController.text,
+                  _passwordController.text,
                   _rePasswordController.text,
-                "acas",1
+                "",1
               ),
             ));
       },

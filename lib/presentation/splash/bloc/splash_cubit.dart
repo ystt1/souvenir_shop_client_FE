@@ -6,6 +6,5 @@ class SplashCubit extends Cubit<SplashState>{
   Future<void> appStarted() async {
     await Future.delayed(Duration(seconds: 0));
     emit(UnAuthenticated());
-
   }
 }

@@ -45,7 +45,7 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if (state is ButtonSuccessState) {
-              var snackBar = SnackBar(
+              var snackBar = const SnackBar(
                 content: Text("success"),
                 behavior: SnackBarBehavior.floating,
               );
@@ -127,7 +127,7 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
   Widget _ageSelection(BuildContext context) {
     return TextField(
       controller: _addressController,
-      decoration: InputDecoration(hintText: "Enter Address"),
+      decoration: const InputDecoration(hintText: "Enter Address"),
     );
   }
 
@@ -137,6 +137,7 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
         child: Builder(builder: (context) {
           return ReactiveButton(
               onPressed: () {
+
                 widget.userCreationReq.gender =
                     context.read<GenderCubit>().state;
                 widget.userCreationReq.age = _addressController.text;
