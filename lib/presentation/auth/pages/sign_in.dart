@@ -17,12 +17,13 @@ class _SignInPageState extends State<SignInPage> {
 
   TextEditingController _emailController=TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 80),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 80),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,7 +38,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Widget _signInText(BuildContext context) {
-    return Text(
+    return const Text(
       "Sign In",
       style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
     );
@@ -46,7 +47,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget _emailField(BuildContext context) {
     return TextField(
       controller: _emailController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           hintText: 'Enter email', hintStyle: TextStyle(color: Colors.white)),
     );
   }
@@ -58,21 +59,21 @@ class _SignInPageState extends State<SignInPage> {
           user: UserSignInReq(_emailController.text, ''),
         ));
       },
-      child: Text("Continue"),
+      child: const Text("Continue"),
     );
   }
 
   Widget _createAccount(BuildContext context) {
     return RichText(
         text: TextSpan(children: [
-      TextSpan(
+      const TextSpan(
           text: "Don't have account? ",
           style: TextStyle(color: AppColors.textColor)),
       TextSpan(
         recognizer: TapGestureRecognizer()..onTap=(){
           AppNavigator.push(context, const SignUpPage());
         },
-          text: "Create One", style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.textColor))
+          text: "Create One", style: const TextStyle(fontWeight: FontWeight.bold,color: AppColors.textColor))
     ]));
   }
 }

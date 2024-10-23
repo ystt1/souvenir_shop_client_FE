@@ -11,6 +11,10 @@ abstract class AuthFirebaseService {
   Future<Either> getAges();
 
   Future<Either> signIn(UserSignInReq user);
+
+  Future<bool> isLogged();
+
+  Future<Either> getCurrentUser();
 }
 
 class AuthFirebaserServiceImp extends AuthFirebaseService {
@@ -24,12 +28,12 @@ class AuthFirebaserServiceImp extends AuthFirebaseService {
           .collection('User')
           .doc(returnedData.user!.uid)
           .set({
+        'userId':returnedData.user?.uid,
         'name': user.name,
         'email': user.email,
         'gender': user.gender,
         'age': user.age
       });
-      print(returnedData.user!.email);
 
       return Right('Sign up was successfull');
     } on FirebaseAuthException catch (e) {
@@ -54,11 +58,35 @@ class AuthFirebaserServiceImp extends AuthFirebaseService {
   @override
   Future<Either> signIn(UserSignInReq user) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: user.email!, password: user.password!);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: user.email!, password: user.password!);
       return const Right('Sign In success');
     } on FirebaseAuthException catch (e) {
       return Left(e.code);
     }
+  }
 
+  @override
+  Future<bool> isLogged() async {
+    try {
+      if (FirebaseAuth.instance.currentUser != null) return true;
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<Either> getCurrentUser() async {
+    try {
+      var currentUser = FirebaseAuth.instance.currentUser;
+      var userData = await FirebaseFirestore.instance
+          .collection('User')
+          .doc(currentUser?.uid)
+          .get().then((value)=>value.data());
+      return Right(userData);
+    } catch (e) {
+      return Left('Please try again ');
+    }
   }
 }
