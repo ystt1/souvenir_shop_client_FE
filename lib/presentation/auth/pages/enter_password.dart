@@ -92,7 +92,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                 .read<ButtonStateCubit>()
                 .execute(params: widget.user, usecase: SignInUseCase());
           },
-          title: 'Login',
+          widget: Text('login'),
         );
       },
     );

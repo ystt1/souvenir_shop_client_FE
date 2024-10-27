@@ -2,9 +2,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:souvenir_shop/common/bloc/product/product_display_cubit.dart';
+import 'package:souvenir_shop/common/bloc/product/product_display_state.dart';
+import 'package:souvenir_shop/common/widget/product_card.dart';
 import 'package:souvenir_shop/domain/product/entity/product.dart';
-import 'package:souvenir_shop/presentation/home/bloc/top_selling_product_display_cubit.dart';
-import 'package:souvenir_shop/presentation/home/bloc/top_selling_product_display_state.dart';
+import 'package:souvenir_shop/domain/product/usecase/get_top_selling_product_usecase.dart';
+
+import 'package:souvenir_shop/service_locator.dart';
 
 import '../../../common/app_colors.dart';
 
@@ -19,30 +23,30 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TopSellingProductDisplayCubit()..getTopSelling(),
-      child: BlocBuilder<TopSellingProductDisplayCubit,
-          TopSellingProductDisplayState>(
+      create: (context) => ProductDisplayCubit(useCase: sl<GetTopSellingProductUseCase>())..getProducts(),
+      child: BlocBuilder<ProductDisplayCubit,
+          ProductDisplayState>(
         builder: (context, state) {
-          if (state is LoadingTopSellingProductDisplayState) {
-            return Center(
+          if (state is ProductLoadingState) {
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          if (state is LoadingSuccessTopSellingProductDisplayState) {
+          if (state is ProductLoadingSuccessState) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [_textTopSelling(), _producs(context,state.topSelling)],
+              children: [_textTopSelling(), _producs(context,state.products)],
             );
           }
-          return Placeholder();
+          return const Placeholder();
         },
       ),
     );
   }
 
   Widget _textTopSelling() {
-    return Text(
+    return const Text(
       "Top Selling",
       style: TextStyle(fontWeight: FontWeight.bold),
     );
@@ -57,7 +61,7 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
             return _card(products[index]);
           },
           separatorBuilder: (context, index) {
-            return SizedBox(width: 10);
+            return const SizedBox(width: 10);
           },
           itemCount: 5),
     );
@@ -66,50 +70,7 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
   Widget _card(ProductEntity product) {
     return SizedBox(
       width: 175,
-      child: Column(
-        children: [
-          Expanded(
-            flex: 4,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      topLeft: Radius.circular(20),
-                    ),
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            product.image),
-                        fit: BoxFit.fill),
-                  ),
-                ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Text(
-                    "-${product.discount}",
-                    style: const TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                  color: AppColors.secondBackground,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20))),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(product.title), Text("${product.price}\$")]),
-            ),
-          )
-        ],
-      ),
+      child: ProductCard(product: product),
     );
   }
 }

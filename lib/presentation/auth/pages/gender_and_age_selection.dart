@@ -137,14 +137,13 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
         child: Builder(builder: (context) {
           return ReactiveButton(
               onPressed: () {
-
                 widget.userCreationReq.gender =
                     context.read<GenderCubit>().state;
                 widget.userCreationReq.age = _addressController.text;
                 context.read<ButtonStateCubit>().execute(
                     usecase: SignUpUseCase(), params: widget.userCreationReq);
               },
-              title: "finish");
+              widget: Text("finish"));
         }));
   }
 }

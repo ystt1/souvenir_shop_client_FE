@@ -46,19 +46,19 @@ class _HeaderState extends State<Header> {
             children: [
           const TextSpan(text: "Hello,"),
           TextSpan(
-              text: user.name, style: TextStyle(fontWeight: FontWeight.bold))
+              text: user.name, style: const TextStyle(fontWeight: FontWeight.bold))
         ]));
   }
 
   Widget _iconCart(BuildContext context) {
     return Container(
-      child: const Icon(
-        CupertinoIcons.cart,
-        color: CupertinoColors.white,
-      ),
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: AppColors.primary,
+      ),
+      child: const Icon(
+        CupertinoIcons.cart,
+        color: CupertinoColors.white,
       ),
     );
   }

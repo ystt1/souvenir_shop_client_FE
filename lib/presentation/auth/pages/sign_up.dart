@@ -26,7 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
         leading: const BackIconAppbar(),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 80),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 80),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _signInText(BuildContext context) {
-    return Text(
+    return const Text(
       "Create Account",
       style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
     );
@@ -55,7 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _emailField(BuildContext context) {
     return TextField(
       controller: _emailController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           hintText: 'Email address', hintStyle: TextStyle(color: Colors.white)),
     );
   }
@@ -63,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _nameField(BuildContext context) {
     return TextField(
       controller: _nameController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           hintText: 'Name', hintStyle: TextStyle(color: Colors.white)),
     );
   }
@@ -71,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _passwordField(BuildContext context) {
     return TextField(
       controller: _passwordController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           hintText: 'Password', hintStyle: TextStyle(color: Colors.white)),
     );
   }
@@ -79,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _rePasswordField(BuildContext context) {
     return TextField(
       controller: _rePasswordController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           hintText: 'Re-password', hintStyle: TextStyle(color: Colors.white)),
     );
   }
@@ -99,14 +99,14 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ));
       },
-      child: Text("Continue"),
+      child: const Text("Continue"),
     );
   }
 
   Widget _createAccount(BuildContext context) {
     return RichText(
         text: TextSpan(children: [
-      TextSpan(
+      const TextSpan(
           text: "Already have account? ",
           style: TextStyle(color: AppColors.textColor)),
       TextSpan(
@@ -115,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Navigator.pop(context);
             },
           text: "Log In",
-          style: TextStyle(
+          style: const TextStyle(
               fontWeight: FontWeight.bold, color: AppColors.textColor))
     ]));
   }

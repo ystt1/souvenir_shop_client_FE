@@ -1,8 +1,6 @@
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
-import 'package:souvenir_shop/common/app_colors.dart';
-import 'package:souvenir_shop/common/helper/navigator/app_navigator.dart';
-import 'package:souvenir_shop/presentation/auth/pages/enter_password.dart';
+
 
 class ForgotPassWordPage extends StatefulWidget {
   const ForgotPassWordPage({super.key});
@@ -17,7 +15,7 @@ class _ForgotPassWordPageState extends State<ForgotPassWordPage> {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 80),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 80),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -31,14 +29,14 @@ class _ForgotPassWordPageState extends State<ForgotPassWordPage> {
   }
 
   Widget _forgotPassword(BuildContext context) {
-    return Text(
+    return const Text(
       "Forgot Password",
       style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
     );
   }
 
   Widget _emailField(BuildContext context) {
-    return TextField(
+    return const TextField(
       decoration: InputDecoration(
           hintText: 'Enter email', hintStyle: TextStyle(color: Colors.white)),
     );
@@ -49,7 +47,7 @@ class _ForgotPassWordPageState extends State<ForgotPassWordPage> {
       onPressed: () {
 
       },
-      child: Text("Continue"),
+      child: const Text("Continue"),
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:souvenir_shop/presentation/home/widgets/categories.dart';
 import 'package:souvenir_shop/presentation/home/widgets/header.dart';
@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
         body: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       child: SingleChildScrollView(
         child: Column(
           children: [

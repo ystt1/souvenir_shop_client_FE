@@ -6,10 +6,10 @@ import 'package:souvenir_shop/common/bloc/button/button_state_cubit.dart';
 
 class ReactiveButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String title;
+  final Widget widget;
 
   const ReactiveButton(
-      {super.key, required this.onPressed, required this.title});
+      {super.key, required this.onPressed, required this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,6 @@ class ReactiveButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         child: Container(alignment: Alignment.center,
-            child: Text(title)));
+            child: widget));
   }
 }

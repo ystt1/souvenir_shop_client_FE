@@ -3,6 +3,8 @@ import 'package:souvenir_shop/data/auth/repository/auth_repository_imp.dart';
 import 'package:souvenir_shop/data/auth/source/auth_firebase_service.dart';
 import 'package:souvenir_shop/data/category/repository/category_repository_imp.dart';
 import 'package:souvenir_shop/data/category/source/category_firebase_service.dart';
+import 'package:souvenir_shop/data/itemCart/repository/item_cart_repository_imp.dart';
+import 'package:souvenir_shop/data/itemCart/source/item_cart_firebase_service.dart';
 import 'package:souvenir_shop/data/product/repository/product_repository_imp.dart';
 import 'package:souvenir_shop/data/product/source/product_firebase_service.dart';
 import 'package:souvenir_shop/domain/auth/repository/auth_repository.dart';
@@ -12,8 +14,11 @@ import 'package:souvenir_shop/domain/auth/usecase/sign_in_usecase.dart';
 import 'package:souvenir_shop/domain/auth/usecase/sign_up_usecase.dart';
 import 'package:souvenir_shop/domain/category/repository/category_repository.dart';
 import 'package:souvenir_shop/domain/category/usecase/get_category_usecase.dart';
+import 'package:souvenir_shop/domain/itemCart/repository/item_cart_repository.dart';
 import 'package:souvenir_shop/domain/product/repository/product_repository.dart';
 import 'package:souvenir_shop/domain/product/usecase/get_new_in_products_usecase.dart';
+import 'package:souvenir_shop/domain/product/usecase/get_products_by_category_id_usecase.dart';
+import 'package:souvenir_shop/domain/product/usecase/get_products_by_title_usecase.dart';
 import 'package:souvenir_shop/domain/product/usecase/get_top_selling_product_usecase.dart';
 
 
@@ -29,12 +34,16 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<ProductFirebaseService>(ProductFirebaseServiceImp());
 
+  sl.registerSingleton<ItemCartFirebaseService>(ItemCartFirebaseServiceImp());
+
   //repo
   sl.registerSingleton<AuthRepository>(AuthRepositoryImp());
 
   sl.registerSingleton<CategoryRepository>(CategoryRepositoryImp());
 
   sl.registerSingleton<ProductRepository>(ProductRepositoryImp());
+
+  sl.registerSingleton<ItemCartRepository>(ItemCartRepositoryImp());
   //usecase
 
   sl.registerSingleton<SignUpUseCase>(SignUpUseCase());
@@ -50,5 +59,10 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetTopSellingProductUseCase>(GetTopSellingProductUseCase());
 
   sl.registerSingleton<GetNewInProductUseCase>(GetNewInProductUseCase());
+
+  sl.registerSingleton<GetProductsByCategoryIdUseCase>(GetProductsByCategoryIdUseCase());
+
+  sl.registerSingleton<GetProductsByTitleUseCase>(GetProductsByTitleUseCase());
+
 
 }

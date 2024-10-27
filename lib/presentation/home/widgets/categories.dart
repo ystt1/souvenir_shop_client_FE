@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:souvenir_shop/common/bloc/category/category_display_cubit.dart';
 import 'package:souvenir_shop/common/bloc/category/category_display_state.dart';
+import 'package:souvenir_shop/common/helper/navigator/app_navigator.dart';
 import 'package:souvenir_shop/domain/category/entity/category_entity.dart';
+import 'package:souvenir_shop/presentation/all_category/page/all_category_page.dart';
+import 'package:souvenir_shop/presentation/category_product/page/category_product.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key});
@@ -37,14 +40,19 @@ class _CategoriesState extends State<Categories> {
   }
 
   Widget _categoryText(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
+        const Text(
           "Categories",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        Text("See All")
+        GestureDetector(
+          onTap: () {
+            AppNavigator.push(context, const AllCategoryPage());
+          },
+          child: const Text("See All"),
+        )
       ],
     );
   }
@@ -55,20 +63,23 @@ class _CategoriesState extends State<Categories> {
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: CupertinoColors.white,
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                          image: NetworkImage(listCate[index].image))),
-                ),
-                Text(listCate[index].title)
-              ],
+            return GestureDetector(
+              onTap: ()=>AppNavigator.push(context,CategoryProductPage(category: listCate[index])),
+              child: Column(
+                children: [
+                  Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: CupertinoColors.white,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(listCate[index].image))),
+                  ),
+                  Text(listCate[index].title)
+                ],
+              ),
             );
           },
           separatorBuilder: (context, index) => const SizedBox(
