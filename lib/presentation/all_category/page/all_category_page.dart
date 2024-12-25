@@ -72,13 +72,13 @@ class AllCategoryPage extends StatelessWidget {
                               color: Colors.white,
                               image: DecorationImage(
                                   image:
-                                      NetworkImage(state.listCate[index].image),
+                                      NetworkImage(state.listCate[index].imageUrl),
                                   fit: BoxFit.fill),
                               shape: BoxShape.circle,
                             ),
                           ),
                           const SizedBox(width: 20),
-                          Text(state.listCate[index].title),
+                          Text(state.listCate[index].name),
                         ],
                       ),
                     ),

@@ -20,7 +20,7 @@ class CategoryProductPage extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           ProductDisplayCubit(useCase: sl<GetProductsByCategoryIdUseCase>())
-            ..getProducts(params: category.categoryId),
+            ..getProducts(params: category.id),
       child: Scaffold(
           appBar: AppBar(
             leading: const BackIconAppbar(),

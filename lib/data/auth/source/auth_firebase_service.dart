@@ -20,28 +20,29 @@ abstract class AuthFirebaseService {
 class AuthFirebaserServiceImp extends AuthFirebaseService {
   @override
   Future<Either> signUp(UserCreationReq user) async {
-    try {
-      var returnedData = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: user.email!, password: user.password!);
-      await FirebaseFirestore.instance
-          .collection('User')
-          .doc(returnedData.user!.uid)
-          .set({
-        'userId':returnedData.user?.uid,
-        'name': user.name,
-        'email': user.email,
-        'gender': user.gender,
-        'age': user.age
-      });
-
-      return Right('Sign up was successfull');
-    } on FirebaseAuthException catch (e) {
-      String message = '';
-      message = e.code;
-
-      return Left(message);
-    }
+    // try {
+    //   var returnedData = await FirebaseAuth.instance
+    //       .createUserWithEmailAndPassword(
+    //           email: user.email!, password: user.password!);
+    //   await FirebaseFirestore.instance
+    //       .collection('User')
+    //       .doc(returnedData.user!.uid)
+    //       .set({
+    //     'userId':returnedData.user?.uid,
+    //     'name': user.name,
+    //     'email': user.email,
+    //     'gender': user.gender,
+    //     'age': user.age
+    //   });
+    //
+    //   return Right('Sign up was successfull');
+    // } on FirebaseAuthException catch (e) {
+    //   String message = '';
+    //   message = e.code;
+    //
+    //   return Left(message);
+    // }
+    return Left('acb');
   }
 
   @override
@@ -57,13 +58,14 @@ class AuthFirebaserServiceImp extends AuthFirebaseService {
 
   @override
   Future<Either> signIn(UserSignInReq user) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: user.email!, password: user.password!);
-      return const Right('Sign In success');
-    } on FirebaseAuthException catch (e) {
-      return Left(e.code);
-    }
+    // try {
+    //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+    //       email: user.email!, password: user.password!);
+    //   return const Right('Sign In success');
+    // } on FirebaseAuthException catch (e) {
+    //   return Left(e.code);
+    // }
+    return const Left('Error');
   }
 
   @override

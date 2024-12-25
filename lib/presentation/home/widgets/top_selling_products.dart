@@ -10,7 +10,6 @@ import 'package:souvenir_shop/domain/product/usecase/get_top_selling_product_use
 
 import 'package:souvenir_shop/service_locator.dart';
 
-import '../../../common/app_colors.dart';
 
 class TopSellingProducts extends StatefulWidget {
   const TopSellingProducts({super.key});
@@ -22,26 +21,28 @@ class TopSellingProducts extends StatefulWidget {
 class _TopSellingProductsState extends State<TopSellingProducts> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProductDisplayCubit(useCase: sl<GetTopSellingProductUseCase>())..getProducts(),
-      child: BlocBuilder<ProductDisplayCubit,
-          ProductDisplayState>(
-        builder: (context, state) {
-          if (state is ProductLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is ProductLoadingSuccessState) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [_textTopSelling(), _producs(context,state.products)],
-            );
-          }
-          return const Placeholder();
-        },
-      ),
+    return Builder(
+      builder: (context) {
+        return BlocBuilder<ProductDisplayCubit,
+              ProductDisplayState>(
+            builder: (context, state) {
+              if (state is ProductLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is ProductLoadingSuccessState) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [_textTopSelling(),const SizedBox(height: 10,), _producs(context,state.products)],
+                );
+              }
+              return const Placeholder();
+            },
+
+        );
+      }
     );
   }
 
@@ -53,12 +54,16 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
   }
 
   Widget _producs(BuildContext context,List<ProductEntity> products) {
+
+    List<ProductEntity> topSelling=products;
+    topSelling.sort((a, b) => b.soldQuantity.compareTo(a.soldQuantity));
     return SizedBox(
       height: 300,
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            return _card(products[index]);
+            return _card(topSelling[index]);
           },
           separatorBuilder: (context, index) {
             return const SizedBox(width: 10);

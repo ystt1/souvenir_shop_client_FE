@@ -48,7 +48,7 @@ class _SignInPageState extends State<SignInPage> {
     return TextField(
       controller: _emailController,
       decoration: const InputDecoration(
-          hintText: 'Enter email', hintStyle: TextStyle(color: Colors.white)),
+          hintText: 'Enter UserName', hintStyle: TextStyle(color: Colors.white)),
     );
   }
 
@@ -56,7 +56,7 @@ class _SignInPageState extends State<SignInPage> {
     return ElevatedButton(
       onPressed: () {
         AppNavigator.push(context, EnterPasswordPage(
-          user: UserSignInReq(_emailController.text, ''),
+          user: UserSignInReq(userName: _emailController.text),
         ));
       },
       child: const Text("Continue"),

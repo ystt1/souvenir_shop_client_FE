@@ -8,13 +8,21 @@ class ProductDisplayCubit extends Cubit<ProductDisplayState> {
   ProductDisplayCubit({required this.useCase}) : super(ProductInitialState());
 
   Future<void> getProducts({dynamic params}) async {
-    emit(ProductLoadingState());
-    var data = await useCase.call(params: params);
-    data.fold((error) {
+    try {
+      emit(ProductLoadingState());
+      var data = await useCase.call(params: params);
+      data.fold((error) {
+        print(error);
+        return emit(ProductLoadingFailureState());
+      }, (data) {
+        return emit(ProductLoadingSuccessState(products: data));
+      });
+    }
+    catch (e)
+    {
+      print(e.toString());
       return emit(ProductLoadingFailureState());
-    }, (data) {
-      return emit(ProductLoadingSuccessState(products: data));
-    });
+    }
   }
 
   void getInitial()

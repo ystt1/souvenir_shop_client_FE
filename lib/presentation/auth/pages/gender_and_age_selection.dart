@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:souvenir_shop/common/app_colors.dart';
+import 'package:souvenir_shop/common/bloc/auth/auth_state_cubit.dart';
 import 'package:souvenir_shop/common/bloc/button/button_state.dart';
 import 'package:souvenir_shop/common/bloc/button/button_state_cubit.dart';
+import 'package:souvenir_shop/common/helper/navigator/app_navigator.dart';
 
 import 'package:souvenir_shop/common/widget/back_icon_appbar.dart';
 import 'package:souvenir_shop/data/auth/models/user_creation_req.dart';
 import 'package:souvenir_shop/domain/auth/usecase/sign_up_usecase.dart';
 
 import 'package:souvenir_shop/presentation/auth/bloc/gender_cubit.dart';
+import 'package:souvenir_shop/presentation/home/pages/home_page.dart';
 
+import '../../../common/bloc/auth/auth_state.dart';
 import '../../../common/widget/reactive_button.dart';
 
 class GenderAndAgeSelection extends StatefulWidget {
@@ -35,21 +39,26 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
           BlocProvider(create: (context) => GenderCubit()),
           BlocProvider(create: (context) => ButtonStateCubit())
         ],
-        child: BlocListener<ButtonStateCubit, ButtonState>(
-          listener: (context, state) {
-            if (state is ButtonFailureState) {
-              var snackBar = SnackBar(
-                content: Text(state.errorMessage),
-                behavior: SnackBarBehavior.floating,
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        child: BlocListener<AuthStateCubit, AuthState>(
+          listener: (BuildContext context, AuthState state) {
+            if (state is AuthLoading) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Center(
+                child: CircularProgressIndicator(),
+              )));
             }
-            if (state is ButtonSuccessState) {
-              var snackBar = const SnackBar(
-                content: Text("success"),
-                behavior: SnackBarBehavior.floating,
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            if (state is AuthSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Center(
+                child: Text("Đăng kí thành công"),
+              )));
+              AppNavigator.pushReplacement(context, const HomePage());
+            }
+            if (state is AuthFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Center(
+                child: Text(state.errorMessage),
+              )));
             }
           },
           child: Column(
@@ -83,27 +92,27 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
   }
 
   Widget _genderSelection(BuildContext context) {
-    return BlocBuilder<GenderCubit, int>(
-        builder: (BuildContext context, int state) {
+    return BlocBuilder<GenderCubit, bool>(
+        builder: (BuildContext context, bool state) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _genderTitle(context, "Men", 1),
+          _genderTitle(context, "Men", true),
           const SizedBox(
             width: 20,
           ),
-          _genderTitle(context, "Women", 2),
+          _genderTitle(context, "Women", false),
         ],
       );
     });
   }
 
-  Widget _genderTitle(BuildContext context, String gender, int index) {
+  Widget _genderTitle(BuildContext context, String gender, bool index) {
     return Expanded(
       flex: 1,
       child: GestureDetector(
         onTap: () {
-          context.read<GenderCubit>().selectedGender(index);
+          context.read<GenderCubit>().selectedGender(false);
         },
         child: Container(
           height: 60,
@@ -139,11 +148,21 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
               onPressed: () {
                 widget.userCreationReq.gender =
                     context.read<GenderCubit>().state;
-                widget.userCreationReq.age = _addressController.text;
-                context.read<ButtonStateCubit>().execute(
-                    usecase: SignUpUseCase(), params: widget.userCreationReq);
+                widget.userCreationReq.address = _addressController.text;
+                UserCreationReq userCreationReq = UserCreationReq(
+                    email: widget.userCreationReq.email,
+                    userName: widget.userCreationReq.userName,
+                    password: widget.userCreationReq.password,
+                    fullName: widget.userCreationReq.fullName,
+                    phoneNumber: widget.userCreationReq.phoneNumber,
+                    address: _addressController.text,
+                    avatarUrl: "test",
+                    gender: context.read<GenderCubit>().state);
+                context
+                    .read<AuthStateCubit>()
+                    .execute(usecase: SignUpUseCase(), params: userCreationReq);
               },
-              widget: Text("finish"));
+              widget: const Text("finish"));
         }));
   }
 }

@@ -1,35 +1,50 @@
 import 'package:souvenir_shop/domain/category/entity/category_entity.dart';
 
 class CategoryModel {
-  final String categoryId;
-  final String title;
-  final String image;
+  final String id;
+  final String name;
+  final String description;
+  final String imageUrl;
+  final List<dynamic> products;
 
-  const CategoryModel({
-    required this.categoryId,
-    required this.title,
-    required this.image,
+  CategoryModel({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.imageUrl,
+    required this.products,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'categoryId': this.categoryId,
-      'title': this.title,
-      'image': this.image,
+      'id': this.id,
+      'name': this.name,
+      'description': this.description,
+      'imageUrl': this.imageUrl,
+      'products': [],
     };
   }
 
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
     return CategoryModel(
-      categoryId: map['categoryId'] as String,
-      title: map['title'] as String,
-      image: map['image'] as String,
+      id: map['id'] as String,
+      name: map['name'] as String,
+      description: map['description'] as String,
+      imageUrl: map['imageUrl'] as String,
+      products: map['products'] ?? [],
     );
   }
+
+
 }
 
 extension CategoryXModel on CategoryModel {
   CategoryEntity toEntity() {
-    return CategoryEntity(categoryId: categoryId, title: title, image: image);
+    return CategoryEntity(
+        id: id,
+        name: name,
+        description: description,
+        imageUrl: imageUrl,
+        products: products);
   }
 }

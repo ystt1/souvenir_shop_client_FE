@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:souvenir_shop/common/app_colors.dart';
+import 'package:souvenir_shop/common/bloc/auth/auth_state.dart';
+import 'package:souvenir_shop/common/bloc/auth/auth_state_cubit.dart';
 import 'package:souvenir_shop/common/helper/navigator/app_navigator.dart';
 import 'package:souvenir_shop/common/widget/back_icon_appbar.dart';
 import 'package:souvenir_shop/data/auth/models/user_creation_req.dart';
@@ -27,21 +30,23 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 80),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _signInText(context),
-              _nameField(context),
-              _emailField(context),
-              _passwordField(context),
-              _rePasswordField(context),
-              _buttonLogin(context),
-              _createAccount(context)
-            ],
+
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _signInText(context),
+                _emailField(context),
+                _userNamePasswordField(context),
+                _nameField(context),
+                _passwordField(context),
+                _buttonLogin(context),
+                _createAccount(context)
+              ],
+            ),
           ),
         ),
-      ),
+
     );
   }
 
@@ -76,11 +81,11 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _rePasswordField(BuildContext context) {
+  Widget _userNamePasswordField(BuildContext context) {
     return TextField(
       controller: _rePasswordController,
       decoration: const InputDecoration(
-          hintText: 'Re-password', hintStyle: TextStyle(color: Colors.white)),
+          hintText: 'UserName', hintStyle: TextStyle(color: Colors.white)),
     );
   }
 
@@ -91,12 +96,14 @@ class _SignUpPageState extends State<SignUpPage> {
             context,
             GenderAndAgeSelection(
               userCreationReq: UserCreationReq(
-                  _nameController.text,
-                  _emailController.text,
-                  _passwordController.text,
-                  _rePasswordController.text,
-                "",1
-              ),
+                  email: _emailController.text,
+                  userName: _rePasswordController.text,
+                  password: _passwordController.text,
+                  fullName: _nameController.text,
+                  phoneNumber: '000000000',
+                  address: '',
+                  avatarUrl: 'null',
+                  gender: true),
             ));
       },
       child: const Text("Continue"),

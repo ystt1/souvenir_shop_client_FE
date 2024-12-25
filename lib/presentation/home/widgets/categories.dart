@@ -18,24 +18,31 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CategoryDisplayCubit()..getCategories(),
-      child: BlocBuilder<CategoryDisplayCubit, CategoryDisplayState>(
-        builder: (context, state) {
-          if (state is CategoryDisplayLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is CategoryDisplaySuccessState) {
-            return Column(
-              children: [
-                _categoryText(context),
-                _listCategories(context, state.listCate)
-              ],
-            );
-          }
-          return Container();
-        },
-      ),
+    return Builder(
+      builder: (context) {
+        return BlocBuilder<CategoryDisplayCubit, CategoryDisplayState>(
+            builder: (context, state) {
+              if (state is CategoryDisplayLoadingState) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (state is CategoryDisplaySuccessState) {
+                return Column(
+                  children: [
+                    _categoryText(context),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _listCategories(context, state.listCate)
+                  ],
+                );
+              }
+              return Container(
+                child: Text('Not found'),
+              );
+            },
+
+        );
+      }
     );
   }
 
@@ -45,13 +52,24 @@ class _CategoriesState extends State<Categories> {
       children: [
         const Text(
           "Categories",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
         GestureDetector(
           onTap: () {
             AppNavigator.push(context, const AllCategoryPage());
           },
-          child: const Text("See All"),
+          child: const Text(
+            "See All",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
         )
       ],
     );
@@ -64,7 +82,8 @@ class _CategoriesState extends State<Categories> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: ()=>AppNavigator.push(context,CategoryProductPage(category: listCate[index])),
+              onTap: () => AppNavigator.push(
+                  context, CategoryProductPage(category: listCate[index])),
               child: Column(
                 children: [
                   Container(
@@ -75,9 +94,12 @@ class _CategoriesState extends State<Categories> {
                         color: CupertinoColors.white,
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: NetworkImage(listCate[index].image))),
+                            image: NetworkImage(listCate[index].imageUrl))),
                   ),
-                  Text(listCate[index].title)
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(listCate[index].name)
                 ],
               ),
             );
@@ -85,7 +107,7 @@ class _CategoriesState extends State<Categories> {
           separatorBuilder: (context, index) => const SizedBox(
                 width: 15,
               ),
-          itemCount: 5),
+          itemCount: 4),
     );
   }
 }

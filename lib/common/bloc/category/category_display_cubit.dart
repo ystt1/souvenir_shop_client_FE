@@ -6,14 +6,21 @@ import '../../../service_locator.dart';
 
 class CategoryDisplayCubit extends Cubit<CategoryDisplayState> {
   CategoryDisplayCubit() : super(CategoryDisplayLoadingState());
-
+  
   Future<void> getCategories() async {
-    var categories = await sl<GetCategoryUseCase>().call();
-
-    categories.fold((error) {
+    try {
+      var categories = await sl<GetCategoryUseCase>().call();
+      categories.fold((error) {
+        print("cubit"+ error);
+        return emit(CategoryDisplayFailureState());
+      }, (data) {
+        return emit(CategoryDisplaySuccessState(listCate: data));
+      });
+    }
+    catch (e)
+    {
+      print(e.toString());
       return emit(CategoryDisplayFailureState());
-    }, (data) {
-      return emit(CategoryDisplaySuccessState(listCate: data));
-    });
+    }
   }
 }

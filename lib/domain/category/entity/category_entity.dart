@@ -1,11 +1,16 @@
 class CategoryEntity {
-  final String categoryId;
-  final String title;
-  final String image;
+  final String id;
+  final String name;
+  final String description;
+  final String imageUrl;
+  final List<dynamic> products;
 
-  const CategoryEntity({
-    required this.categoryId,
-    required this.title,
-    required this.image,
+  CategoryEntity({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.imageUrl,
+    required this.products,
   });
+
 }
