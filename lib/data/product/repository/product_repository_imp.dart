@@ -64,17 +64,24 @@ class ProductRepositoryImp extends ProductRepository {
   @override
   Future<Either> getProductsByTitle(String title) async {
     try {
-      var categories =
-          await sl<ProductDotNetService>().getProductsByTitle(title);
+      var categories = await sl<ProductDotNetService>().getAllProduct();
 
       return categories.fold((error) {
         return Left(error);
       }, (data) {
-        return Right(
-            (data as List<ProductModel>).map((e) => e.toEntity()).toList());
+        var filteredProducts = (data as List<ProductModel>)
+            .where((product) => product.name.toLowerCase().contains(title.toLowerCase()))
+            .map((product) => product.toEntity())
+            .toList();
+
+
+        if (filteredProducts.isEmpty) {
+          return Left("No products found for this category.");
+        }
+
+        return Right(filteredProducts);
       });
     } catch (e) {
-      print("e" + e.toString());
       return Left(e.toString());
     }
   }

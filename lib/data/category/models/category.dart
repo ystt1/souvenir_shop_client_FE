@@ -1,5 +1,7 @@
 import 'package:souvenir_shop/domain/category/entity/category_entity.dart';
 
+import '../../../common/constant.dart';
+
 class CategoryModel {
   final String id;
   final String name;
@@ -26,6 +28,10 @@ class CategoryModel {
   }
 
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
+    String processedImageUrl = map['imageUrl'] as String;
+    if (!processedImageUrl.startsWith('http://') && !processedImageUrl.startsWith('https://')) {
+      processedImageUrl = '$AppImage/$processedImageUrl';
+    }
     return CategoryModel(
       id: map['id'] as String,
       name: map['name'] as String,
