@@ -70,8 +70,11 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _tellUs(context),
+                      SizedBox(height: 20,),
                       _genderSelection(context),
+                      SizedBox(height: 20,),
                       _address(context),
+                      SizedBox(height: 20,),
                       _ageSelection(context)
                     ]),
               ),
@@ -112,7 +115,7 @@ class _GenderAndAgeSelectionState extends State<GenderAndAgeSelection> {
       flex: 1,
       child: GestureDetector(
         onTap: () {
-          context.read<GenderCubit>().selectedGender(false);
+          context.read<GenderCubit>().selectedGender(index);
         },
         child: Container(
           height: 60,

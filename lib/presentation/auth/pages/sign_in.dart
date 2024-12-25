@@ -28,8 +28,11 @@ class _SignInPageState extends State<SignInPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _signInText(context),
+            SizedBox(height: 40,),
             _emailField(context),
+            SizedBox(height: 20,),
             _buttonLogin(context),
+            SizedBox(height: 30,),
             _createAccount(context)
           ],
         ),

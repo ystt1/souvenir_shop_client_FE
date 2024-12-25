@@ -66,8 +66,11 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _passwordText(context),
+                SizedBox(height: 40,),
                 _passwordField(context),
+                SizedBox(height: 20,),
                 _buttonLogin(context),
+                SizedBox(height: 10,),
                 _forgotPassword(context)
               ],
             ),

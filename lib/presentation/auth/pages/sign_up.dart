@@ -36,11 +36,17 @@ class _SignUpPageState extends State<SignUpPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _signInText(context),
+                SizedBox(height: 40,),
                 _emailField(context),
+                SizedBox(height: 10,),
                 _userNamePasswordField(context),
+                SizedBox(height: 10,),
                 _nameField(context),
+                SizedBox(height: 10,),
                 _passwordField(context),
+                SizedBox(height: 10,),
                 _buttonLogin(context),
+                SizedBox(height: 10,),
                 _createAccount(context)
               ],
             ),

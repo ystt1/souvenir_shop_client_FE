@@ -36,7 +36,7 @@ class CategoryModel {
       id: map['id'] as String,
       name: map['name'] as String,
       description: map['description'] as String,
-      imageUrl: map['imageUrl'] as String,
+      imageUrl: processedImageUrl,
       products: map['products'] ?? [],
     );
   }
